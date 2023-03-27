@@ -2,9 +2,6 @@ import React from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { useState } from 'react'
-// import dotenv from 'dotenv'
-
-// dotenv.config()
 
 const Country = ({country}) => {
   const [weather, setWeather] = useState()
