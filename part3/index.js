@@ -10,6 +10,8 @@ app.use(cors())
 
 app.use(express.json())
 
+app.use(express.static('dist'))
+
 const PORT = process.env.PORT || 3001
 
 let persons = [
@@ -35,9 +37,9 @@ let persons = [
     }
 ]
 
-app.get('/', (request, response) => {
-    response.json(persons)
-})
+// app.get('/', (request, response) => {
+//     response.json(persons)
+// })
 
 app.get('/info', (request, response) => {
     const div = `
