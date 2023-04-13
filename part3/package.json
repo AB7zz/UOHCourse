@@ -4,9 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "build": "vite build",
-    "preview": "vite preview"
+    "start": "node index.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -15,14 +13,10 @@
     "mongoose": "^7.0.3",
     "morgan": "^1.10.0",
     "path": "^0.12.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "url": "^0.11.0"
   },
-  "devDependencies": {
-    "@types/react": "^18.0.17",
-    "@types/react-dom": "^18.0.6",
-    "@vitejs/plugin-react": "^2.0.1",
-    "vite": "^3.0.7"
-  }
+  "description": "https://uoh-api1.onrender.com/",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC"
 }
