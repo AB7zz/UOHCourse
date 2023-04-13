@@ -8,7 +8,7 @@ const create = newPerson => {
 }
 
 const getAll = () => {
-    const request = axios.get(baseUrl)
+    const request = axios.get(`${baseUrl}/all`)
     return request.then(response => response.data)
 }
 

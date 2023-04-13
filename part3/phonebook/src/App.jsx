@@ -54,12 +54,17 @@ function App() {
           return
         }
       }else{
-        const res = await functions.create(newPerson)
+        functions.create(newPerson)
+          .then(res => {
+            setPersons([...persons, res])
+    
+            setMessage(`${newName} has been added to the list`)
+          })
+          .catch(error => {
+            console.log('Error 4: ', error.message)
+            setMessage(error.message)
+          })
         
-        setPersons([...persons, res])
-
-        setMessage(`${newName} has been added to the list`)
-
         setTimeout(() => {
           setMessageNull()
         }, 5000)
