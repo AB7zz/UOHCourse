@@ -88,13 +88,34 @@ describe('total likes', () => {
 
 
 describe('favorite blog', () => {
-
   test('of a bigger list' , () => {
     const result = listHelper.favoriteBlog(blogs)
     const answer = {
       title: 'Canonical string reduction',
       author: 'Edsger W. Dijkstra',
       likes: 12
+    }
+    expect(result).toEqual(answer)
+  })
+})
+
+describe('most blogs', () => {
+  test('of a bigger list' , () => {
+    const result = listHelper.mostBlogs(blogs)
+    const answer = {
+      author: "Robert C. Martin",
+      blogs: 3
+    }
+    expect(result).toEqual(answer)
+  })
+})
+
+describe('most likes', () => {
+  test('of a bigger list' , () => {
+    const result = listHelper.mostLikes(blogs)
+    const answer = {
+      author: "Edsger W. Dijkstra",
+      likes: 17
     }
     expect(result).toEqual(answer)
   })
