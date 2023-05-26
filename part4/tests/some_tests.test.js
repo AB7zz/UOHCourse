@@ -1,4 +1,11 @@
-const listHelper = require('../utils/list_helper')
+const listHelper = require('../utils/list_helper.js')
+const supertest = require('supertest')
+const app = require('../app')
+const Blog = require('../models/blogs.js')
+require('express-async-errors')
+
+const api = supertest(app)
+
 
 const blogs = [
   {
@@ -62,11 +69,36 @@ const listWithOneBlog = [
   }
 ]
 
+
+beforeEach(async () => {
+  await Blog.deleteMany({})
+  const blogObjects = blogs
+    .map(blog => new Blog(blog))
+  const promiseArray = blogObjects.map(blog => blog.save())
+  await Promise.all(promiseArray)
+})
+
+
 test('dummy returns one', () => {
   const blogs = []
 
   const result = listHelper.dummy(blogs)
   expect(result).toBe(1)
+})
+
+describe('when there is initially some blogs saved', () => {
+  test('blogs are returned as json', async () => {
+    await api
+      .get('/api/blogs')
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+  }, 100000)
+
+  test('there are 6 blogs', async() => {
+    const response = await api.get('/api/blogs')
+
+    expect(response.body).toHaveLength(6)
+  })
 })
 
 describe('total likes', () => {
