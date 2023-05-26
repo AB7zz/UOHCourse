@@ -112,13 +112,25 @@ describe('when there is initially some blogs saved', () => {
     const response = await api.get('/api/blogs')
 
     const contents = response.body.map(r => r.title)
-
-    console.log(response.body)
   
     expect(response.body).toHaveLength(blogs.length + 1)
     expect(contents).toContain(
       'Random type'
     )
+  }, 100000)
+
+  test('check if like is set to 0 by default', async() => {
+    const newBlog = {
+      title: "Random type 2",
+      author: "Abhinav C V",
+      url: "https://random.com"
+    }
+
+    const blog = new Blog(newBlog)
+
+    expect(blog.likes).toBeDefined()
+    expect(blog.likes).toBe(0)
+
   }, 100000)
 })
 
