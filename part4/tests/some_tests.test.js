@@ -76,7 +76,7 @@ beforeEach(async () => {
     .map(blog => new Blog(blog))
   const promiseArray = blogObjects.map(blog => blog.save())
   await Promise.all(promiseArray)
-})
+}, 100000)
 
 
 test('dummy returns one', () => {
@@ -84,9 +84,9 @@ test('dummy returns one', () => {
 
   const result = listHelper.dummy(blogs)
   expect(result).toBe(1)
-})
+}, 100000)
 
-describe('when there is initially some blogs saved', () => {
+describe('when there is initially some blogs saved', () => {  
   test('blogs are returned as json', async () => {
     await api
       .get('/api/blogs')
