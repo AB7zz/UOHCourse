@@ -132,6 +132,29 @@ describe('when there is initially some blogs saved', () => {
     expect(blog.likes).toBe(0)
 
   }, 100000)
+
+  test('check if POST request returns 400 if title or url is missing', async() => {
+    const blog1 = {
+      author: "Abhinav C V",
+      likes: 10
+    }
+
+    const blog2 = {
+      url: "https://random.com",
+      likes: 10
+    }
+
+    await api
+      .post('/api/blogs')
+      .send(blog1)
+      .expect(400)
+
+    await api
+      .post('/api/blogs')
+      .send(blog2)
+      .expect(400)
+
+  }, 100000)
 })
 
 describe('total likes', () => {
