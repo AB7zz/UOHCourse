@@ -99,6 +99,15 @@ describe('when there is initially some blogs saved', () => {
 
     expect(response.body).toHaveLength(6)
   })
+
+  test('id is defined', async() => {
+    const blogPost = new Blog(blogs[0])
+
+    const blogPostJSON = blogPost.toJSON()
+
+    expect(blogPostJSON.id).toBeDefined()
+
+  })
 })
 
 describe('total likes', () => {
