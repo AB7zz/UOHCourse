@@ -2,6 +2,7 @@ const listHelper = require('../utils/list_helper.js')
 const supertest = require('supertest')
 const app = require('../app')
 const Blog = require('../models/blogs.js')
+const helper = require('./helper.js')
 require('express-async-errors')
 
 const api = supertest(app)
@@ -9,7 +10,7 @@ const api = supertest(app)
 
 const blogs = [
   {
-    title: "React patterns",
+    title: "React pattern",
     author: "Michael Chan",
     url: "https://reactpatterns.com/",
     likes: 7
@@ -95,6 +96,10 @@ describe('when there is initially some blogs saved', () => {
 
   }, 100000)
 
+})
+
+
+describe('blog can be added', () => {
   test('a valid blog can be added', async() => {
     const newBlog = {
       title: "Random type",
@@ -155,6 +160,48 @@ describe('when there is initially some blogs saved', () => {
       .expect(400)
 
   }, 100000)
+})
+
+describe('deletion of a blog', () => {
+  test('succeeds with status code 204 if id is valid', async() => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToDelete = blogsAtStart[0]
+
+
+    await api
+      .delete(`/api/blogs/${blogToDelete.id}`)
+      .expect(204)
+
+    const blogsAtEnd = await helper.blogsInDb()
+
+    expect(blogsAtEnd).toHaveLength(
+      blogs.length - 1
+    )
+
+    const titles = blogsAtEnd.map(r => r.title)
+
+    expect(titles).not.toContain(blogToDelete.title)
+  })
+})
+
+describe('updating a blog', () => {
+  test('succeeds with updating data', async() => {
+    const blogsAtStart = await helper.blogsInDb()
+    const blogToUpdate = blogsAtStart[0]
+
+    const blog = {
+      likes: 10
+    }
+
+    await api
+      .put(`/api/blogs/${blogToUpdate.id}`)
+      .send(blog)
+      .expect(200)
+  
+    const updatedBlogs = await helper.blogsInDb()
+    const updatedBlog = updatedBlogs[0]
+    expect(updatedBlog.likes).toBe(blog.likes)
+  })
 })
 
 describe('total likes', () => {
