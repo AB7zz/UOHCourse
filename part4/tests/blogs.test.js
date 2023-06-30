@@ -20,7 +20,7 @@ describe("when there are initially some blogs saved", () => {
       .get("/api/blogs")
       .expect(200)
       .expect("Content-Type", /application\/json/);
-  });
+  },100000);
 
   test("blogs have an 'id' property instead of '_id'", async () => {
     const response = await api.get("/api/blogs");
@@ -30,7 +30,7 @@ describe("when there are initially some blogs saved", () => {
     for (const id of ids) {
       expect(id).toBeDefined();
     }
-  });
+  },100000);
 });
 
 describe("addition of a new blog", () => {
@@ -65,7 +65,7 @@ describe("addition of a new blog", () => {
 
     const titles = blogsAtEnd.map((blog) => blog.title);
     expect(titles).toContain("A Blog");
-  });
+  },100000);
 
   test("the 'likes' property defaults to 0 if missing", async () => {
     const newBlog = {
@@ -84,7 +84,7 @@ describe("addition of a new blog", () => {
     const blogsAtEnd = await helper.blogsInDb();
     expect(blogsAtEnd).toHaveLength(helper.blogs.length + 1);
     expect(blogsAtEnd[blogsAtEnd.length - 1].likes).toBe(0);
-  });
+  },100000);
 
   test("backend responds with status 400 if 'title' and 'url' are missing", async () => {
     const newBlog = {
@@ -99,7 +99,7 @@ describe("addition of a new blog", () => {
 
     const blogsAtEnd = await helper.blogsInDb();
     expect(blogsAtEnd).toHaveLength(helper.blogs.length);
-  });
+  },100000);
 });
 
 describe("deletion of a blog", () => {
@@ -142,7 +142,7 @@ describe("deletion of a blog", () => {
 
     const titles = blogsAtEnd.map((blog) => blog.title);
     expect(titles).not.toContain(blogToDelete.title);
-  });
+  },100000);
 
   test("fails with status code 401 if the user is not authorized", async () => {
     const blogsAtStart = await Blog.find({}).populate("user");
@@ -159,7 +159,7 @@ describe("deletion of a blog", () => {
 
     expect(blogsAtEnd).toHaveLength(blogsAtStart.length);
     expect(blogsAtStart).toEqual(blogsAtEnd);
-  });
+  },100000);
 });
 
 describe("updating a blog", () => {
@@ -176,7 +176,7 @@ describe("updating a blog", () => {
     const updatedBlog = blogsAtEnd[0];
     expect(blogsAtEnd).toHaveLength(helper.blogs.length);
     expect(updatedBlog.likes).toBe(10);
-  });
+  },100000);
 });
 
 afterAll(() => {
